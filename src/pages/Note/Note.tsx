@@ -22,14 +22,14 @@ export const Note = () => {
     if (!inputValue) return;
     addNote({ id: Date.now(), value: inputValue });
     setInputValue('');
-    navigate('../');
+    navigate('');
   };
 
   const handleAddNoteToKeyUp: KeyboardEventHandler<HTMLDivElement> = e => {
     if (e.key === 'Enter' && inputValue) {
       addNote({ id: Date.now(), value: inputValue });
       setInputValue('');
-      navigate('../');
+      navigate('');
     }
   };
 
