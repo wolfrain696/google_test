@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.js": "/google_test/static/js/main.da73ceed.js",
+    "main.js": "/google_test/static/js/main.cd201bf7.js",
     "index.html": "/google_test/index.html",
-    "main.da73ceed.js.map": "/google_test/static/js/main.da73ceed.js.map"
+    "main.cd201bf7.js.map": "/google_test/static/js/main.cd201bf7.js.map"
   },
   "entrypoints": [
-    "static/js/main.da73ceed.js"
+    "static/js/main.cd201bf7.js"
   ]
 }
