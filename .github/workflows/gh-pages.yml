@@ -19,8 +19,8 @@ jobs:
         with:
           node-version: 14.x
 
-      - name: Install npm packages
-        run: npm install
+      - name: Install NPM packages
+        run: npm ci
 
       - name: Build project
         run:   CI=false npm run build
