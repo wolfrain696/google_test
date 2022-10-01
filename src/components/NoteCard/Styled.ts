@@ -6,6 +6,7 @@ export const StyledCardContainer = styled(Card)`
   height: max-content;
   display: flex;
   justify-content: space-between;
+  align-items: flex-start;
   gap: 12px;
   max-width: 48%;
   transition: all 1s ease;

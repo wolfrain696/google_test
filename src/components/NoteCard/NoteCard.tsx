@@ -43,6 +43,7 @@ export const NoteCard: FC<INoteCard> = ({ title, onDeleteCard, id, onEditNote })
         </StyledCardContainer>
       </Zoom>
       <EditNoteModal
+        removeNote={handleDeleteCard}
         onChangeEditInput={handleEditNote}
         closeModal={handleCloseModal}
         isOpen={isEdit}

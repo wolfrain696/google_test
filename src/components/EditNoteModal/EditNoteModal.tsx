@@ -12,14 +12,21 @@ interface Props {
   id: number;
   closeModal: () => void;
   onChangeEditInput: (e: ChangeEvent<HTMLInputElement>) => void;
+  removeNote: () => void;
 }
 
-export const EditNoteModal: FC<Props> = ({ isOpen, title, closeModal, onChangeEditInput }) => (
+export const EditNoteModal: FC<Props> = ({
+  isOpen,
+  title,
+  closeModal,
+  onChangeEditInput,
+  removeNote,
+}) => (
   <Modal open={isOpen} onClose={closeModal}>
     <Fade in={isOpen}>
       <StyledModalContent>
-        <CustomInput onChange={onChangeEditInput} value={title} />
-        <IconButton onClick={closeModal} size={'small'}>
+        <CustomInput multiline onChange={onChangeEditInput} value={title} />
+        <IconButton onClick={removeNote} size={'small'}>
           <DeleteIcon />
         </IconButton>
       </StyledModalContent>
