@@ -1,6 +1,7 @@
-import { FC, ReactNode, createContext, useContext, useState } from 'react';
+import { FC, ReactNode, createContext, useContext, useEffect, useState } from 'react';
 
 import { IContext, INote } from '../types/note';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 interface IContextProvider {
   children: ReactNode;
@@ -10,30 +11,59 @@ export const NoteContext = createContext<IContext | null>(null);
 
 // компонент contextProvider хранит в себе состояние и бизнес логику приложения-модуля аналог сласса в mobX
 export const NoteContextProvider: FC<IContextProvider> = ({ children }) => {
-  const [noteList, setNote] = useState<INote[] | []>([]);
   const [searchedNotes, setSearchedNotes] = useState<INote[] | []>([]);
+  const [searchValue, setSearchValue] = useState('');
+  const [noteList, setNote] = useLocalStorage<INote[] | []>('noteList', []);
+  const [isOpenSideBar, setIsOpenSideBar] = useState(false);
+
+  useEffect(() => {
+    if (searchValue) {
+      const foundNotes = noteList.filter(note =>
+        note.value.toLowerCase().includes(searchValue.toLowerCase())
+      );
+      setSearchedNotes(foundNotes);
+    }
+  }, [searchValue]);
+
+  const toggleOpenSideBar = () => {
+    setIsOpenSideBar(!isOpenSideBar);
+  };
+
   const addNote = (newNote: INote) => {
     setNote([newNote, ...noteList]);
   };
 
   const removeNote = (noteId: number) => {
     setNote(noteList.filter(note => note.id !== noteId));
-    setSearchedNotes(noteList.filter(note => note.id !== noteId));
+    setSearchedNotes(searchedNotes.filter(note => note.id !== noteId));
   };
 
-  const searchNote = (searchValue: string) => {
-    const foundNotes = noteList.filter(note =>
-      note.value.toLowerCase().includes(searchValue.toLowerCase())
+  const onChangeSearchValue = (value: string) => {
+    setSearchValue(value);
+  };
+
+  const editNote = (id: number, editValue: string) => {
+    const editedNote = noteList.map(note =>
+      note.id === id ? { ...note, value: editValue } : note
     );
-    setSearchedNotes(foundNotes);
+    setNote(editedNote);
+  };
+
+  const cleanSearchList = () => {
+    setSearchedNotes([]);
   };
 
   const contextValue = {
+    toggleOpenSideBar,
+    isOpenSideBar,
+    editNote,
     noteList,
     addNote,
     removeNote,
-    searchNote,
     searchedNotes,
+    onChangeSearchValue,
+    searchValue,
+    cleanSearchList,
   };
   return <NoteContext.Provider value={contextValue}>{children}</NoteContext.Provider>;
 };

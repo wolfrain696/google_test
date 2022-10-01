@@ -7,21 +7,36 @@ import Typography from '@mui/material/Typography';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { ChangeEvent } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { CloseOutlined } from '@mui/icons-material';
 
 import { useNoteContext } from '../../context/Context';
 
 import { StyledInputBase, StyledSearch, StyledSearchIconWrapper } from './Styled';
 
 export const SearchAppBar = () => {
-  const { searchNote } = useNoteContext();
+  const { onChangeSearchValue, searchValue, cleanSearchList, toggleOpenSideBar } = useNoteContext();
+  const navigate = useNavigate();
   const handleSearchNote = (e: ChangeEvent<HTMLInputElement>) => {
-    searchNote(e.target.value);
+    onChangeSearchValue(e.target.value);
   };
+
+  const handleFocusSearch = () => {
+    navigate('search');
+  };
+
+  const handleCloseSearch = () => {
+    navigate(-1);
+    onChangeSearchValue('');
+    cleanSearchList();
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Toolbar>
           <IconButton
+            onClick={toggleOpenSideBar}
             size="large"
             edge="start"
             color="inherit"
@@ -42,7 +57,17 @@ export const SearchAppBar = () => {
             <StyledSearchIconWrapper>
               <SearchIcon />
             </StyledSearchIconWrapper>
-            <StyledInputBase placeholder="Search…" onChange={handleSearchNote} />
+            <StyledInputBase
+              endAdornment={
+                <IconButton onClick={handleCloseSearch}>
+                  <CloseOutlined />
+                </IconButton>
+              }
+              onFocus={handleFocusSearch}
+              placeholder="SearchList…"
+              onChange={handleSearchNote}
+              value={searchValue}
+            />
           </StyledSearch>
         </Toolbar>
       </AppBar>

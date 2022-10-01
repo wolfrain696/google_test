@@ -1,6 +1,7 @@
 import { Card, styled } from '@mui/material';
 
 export const StyledCardContainer = styled(Card)`
+  cursor: pointer;
   padding: 16px;
   height: max-content;
   display: flex;

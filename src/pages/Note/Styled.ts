@@ -1,10 +1,10 @@
 import { Box, Container, styled } from '@mui/material';
 
 export const StyledContainer = styled(Container)`
+  padding: 96px 20px 20px;
   display: flex;
   flex-direction: column;
   gap: 24px;
-  padding: 20px;
 `;
 
 export const StyledListWrapper = styled(Box)`
