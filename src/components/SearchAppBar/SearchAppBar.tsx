@@ -22,11 +22,11 @@ export const SearchAppBar = () => {
   };
 
   const handleFocusSearch = () => {
-    navigate('search');
+    navigate('/search');
   };
 
   const handleCloseSearch = () => {
-    navigate(-1);
+    navigate('../');
     onChangeSearchValue('');
     cleanSearchList();
   };
