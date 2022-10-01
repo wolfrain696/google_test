@@ -22,7 +22,7 @@ export const SearchAppBar = () => {
   };
 
   const handleFocusSearch = () => {
-    navigate('/search');
+    navigate('./search');
   };
 
   const handleCloseSearch = () => {
