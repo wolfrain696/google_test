@@ -10,6 +10,7 @@ export interface IContext {
   isOpenSideBar: boolean;
   toggleOpenSideBar: () => void;
   basket: INote[] | [];
+  removeFromBasket: (noteId: number) => void;
 }
 
 export interface INote {

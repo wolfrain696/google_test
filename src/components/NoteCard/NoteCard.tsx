@@ -1,5 +1,5 @@
-import { IconButton, Typography, Zoom } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
+import { IconButton, List, Typography, Zoom } from '@mui/material';
+import { Delete, Restore } from '@mui/icons-material';
 import { ChangeEvent, FC, useEffect, useState } from 'react';
 
 import { EditNoteModal } from '../EditNoteModal/EditNoteModal';
@@ -10,13 +10,23 @@ interface INoteCard {
   id: number;
   title: string;
   onDeleteCard: (id: number) => void;
-  onEditNote: (id: number, editValue: string) => void;
+  onEditNote?: (id: number, editValue: string) => void;
+  isBasket?: boolean;
+  onRestoreNote?: () => void;
 }
-
-export const NoteCard: FC<INoteCard> = ({ title, onDeleteCard, id, onEditNote }) => {
+//Переиспользоваемый компонент "Заметка" с небольшим собственным состояние и хендлерами
+export const NoteCard: FC<INoteCard> = ({
+  title,
+  onDeleteCard,
+  id,
+  onEditNote,
+  isBasket,
+  onRestoreNote,
+}) => {
   const [isEdit, setIsEdit] = useState(false);
   const [editValue, setEditValue] = useState(title);
   const handleOpenEditModal = () => {
+    if (isBasket) return;
     setIsEdit(true);
   };
   const handleCloseModal = () => {
@@ -29,17 +39,29 @@ export const NoteCard: FC<INoteCard> = ({ title, onDeleteCard, id, onEditNote })
     setEditValue(e.target.value);
   };
 
+  const handleRestoreNote = () => {
+    if (onRestoreNote) onRestoreNote();
+    onDeleteCard(id);
+  };
+
   useEffect(() => {
-    onEditNote(id, editValue);
+    if (onEditNote) onEditNote(id, editValue);
   }, [editValue]);
   return (
     <>
       <Zoom in>
         <StyledCardContainer onClick={handleOpenEditModal}>
           <Typography variant={'subtitle1'}>{title}</Typography>
-          <IconButton onClick={handleDeleteCard} aria-label="delete" size={'small'}>
-            <DeleteIcon />
-          </IconButton>
+          <List>
+            <IconButton onClick={handleDeleteCard} aria-label="delete" size={'small'}>
+              <Delete />
+            </IconButton>
+            {isBasket && (
+              <IconButton onClick={handleRestoreNote} aria-label="restore" size={'small'}>
+                <Restore />
+              </IconButton>
+            )}
+          </List>
         </StyledCardContainer>
       </Zoom>
       <EditNoteModal

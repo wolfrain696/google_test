@@ -14,8 +14,8 @@ export const NoteContextProvider: FC<IContextProvider> = ({ children }) => {
   const [searchedNotes, setSearchedNotes] = useState<INote[] | []>([]);
   const [searchValue, setSearchValue] = useState('');
   const [noteList, setNote] = useLocalStorage<INote[] | []>('noteList', []);
+  const [basket, setBasket] = useLocalStorage<INote[] | []>('basket', []);
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
-  const [basket, setBasket] = useState<INote[] | []>([]);
 
   useEffect(() => {
     if (searchValue) {
@@ -45,6 +45,10 @@ export const NoteContextProvider: FC<IContextProvider> = ({ children }) => {
     setSearchValue(value);
   };
 
+  const removeFromBasket = (noteId: number) => {
+    setBasket(basket.filter(note => note.id !== noteId));
+  };
+
   const editNote = (id: number, editValue: string) => {
     const editedNote = noteList.map(note =>
       note.id === id ? { ...note, value: editValue } : note
@@ -68,6 +72,7 @@ export const NoteContextProvider: FC<IContextProvider> = ({ children }) => {
     searchValue,
     cleanSearchList,
     basket,
+    removeFromBasket,
   };
   return <NoteContext.Provider value={contextValue}>{children}</NoteContext.Provider>;
 };
