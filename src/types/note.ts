@@ -9,6 +9,7 @@ export interface IContext {
   editNote: (id: number, editValue: string) => void;
   isOpenSideBar: boolean;
   toggleOpenSideBar: () => void;
+  basket: INote[] | [];
 }
 
 export interface INote {

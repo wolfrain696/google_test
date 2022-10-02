@@ -5,9 +5,9 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { CustomInput } from '../../components/CustomInput/CustomInput';
 import { useNoteContext } from '../../context/Context';
 import { NoteCard } from '../../components/NoteCard/NoteCard';
+import { StyledContainer, StyledListWrapper } from '../../styles/styles';
 
 import { SearchList } from './components/SearchList/SearchList';
-import { StyledContainer, StyledListWrapper } from './Styled';
 
 export const Note = () => {
   const { noteList, addNote, removeNote, searchedNotes, editNote } = useNoteContext();

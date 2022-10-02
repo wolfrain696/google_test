@@ -15,6 +15,7 @@ export const NoteContextProvider: FC<IContextProvider> = ({ children }) => {
   const [searchValue, setSearchValue] = useState('');
   const [noteList, setNote] = useLocalStorage<INote[] | []>('noteList', []);
   const [isOpenSideBar, setIsOpenSideBar] = useState(false);
+  const [basket, setBasket] = useState<INote[] | []>([]);
 
   useEffect(() => {
     if (searchValue) {
@@ -34,6 +35,8 @@ export const NoteContextProvider: FC<IContextProvider> = ({ children }) => {
   };
 
   const removeNote = (noteId: number) => {
+    const deletedNote = noteList.filter(note => note.id === noteId);
+    setBasket([...basket, ...deletedNote]);
     setNote(noteList.filter(note => note.id !== noteId));
     setSearchedNotes(searchedNotes.filter(note => note.id !== noteId));
   };
@@ -64,6 +67,7 @@ export const NoteContextProvider: FC<IContextProvider> = ({ children }) => {
     onChangeSearchValue,
     searchValue,
     cleanSearchList,
+    basket,
   };
   return <NoteContext.Provider value={contextValue}>{children}</NoteContext.Provider>;
 };

@@ -1,5 +1,6 @@
 import { Drawer, List, ListItemButton, ListItemIcon, ListItemText, styled } from '@mui/material';
 import { Delete, EventNote } from '@mui/icons-material';
+import { Link } from 'react-router-dom';
 
 import { useNoteContext } from '../../context/Context';
 
@@ -19,18 +20,22 @@ export const SideBar = () => {
   return (
     <StyledSideBar variant={'permanent'} open={isOpenSideBar}>
       <List>
-        <ListItemButton>
-          <ListItemIcon>
-            <EventNote />
-          </ListItemIcon>
-          <ListItemText>Заметки</ListItemText>
-        </ListItemButton>
-        <ListItemButton>
-          <ListItemIcon>
-            <Delete />
-          </ListItemIcon>
-          <ListItemText>Карзина</ListItemText>
-        </ListItemButton>
+        <Link to="/">
+          <ListItemButton>
+            <ListItemIcon>
+              <EventNote />
+            </ListItemIcon>
+            <ListItemText>Заметки</ListItemText>
+          </ListItemButton>
+        </Link>
+        <Link to="basket">
+          <ListItemButton>
+            <ListItemIcon>
+              <Delete />
+            </ListItemIcon>
+            <ListItemText>Карзина</ListItemText>
+          </ListItemButton>
+        </Link>
       </List>
     </StyledSideBar>
   );
