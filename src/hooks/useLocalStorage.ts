@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-
+// Кастомый хук для работы с localStorage
 function useLocalStorage<T>(key: string, defaultValue: T[]): T[] & ((value: T) => void)[] {
   const [value, setValue] = useState(() => {
     let currentValue;
